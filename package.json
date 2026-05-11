@@ -1,0 +1,12 @@
+{
+  "name": "business-alignment-mockup",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "openai": "^4.11.0"
+  }
+}
