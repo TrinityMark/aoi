@@ -229,14 +229,16 @@
             summaryText.textContent = value.length ? value : '(Not yet generated)';
         }
 
+        const FLOW_URL = 'https://bb06665214b0e7c9957df91fc7a08e.c0.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/5cdce877a561402c94b03243239610d8/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=TqtOAzyz7PUQIcLl3Ry6gqh9Z56B4ujkGIDnmr63P2E';
+
         async function generateAIideas() {
             const button = document.getElementById('generate-ideas-button');
             const panel = document.getElementById('ai-ideas-panel');
             const list = document.getElementById('ai-ideas-list');
             const errorText = document.getElementById('ai-ideas-error');
-            const prompt = document.getElementById('question-1').value.trim();
-            const industry = document.querySelector('input[placeholder*="Diesel Mechanic"]').value.trim();
-            const aoiCategory = document.querySelector('input[name="aoi-category"]:checked')?.value || '';
+            const area_not_addressed = document.getElementById('question-1').value.trim();
+            const client_industry = document.querySelector('input[placeholder*="Diesel Mechanic"]').value.trim();
+            const aoi_category = document.querySelector('input[name="aoi-category"]:checked')?.value || '';
 
             button.disabled = true;
             button.textContent = 'Generating...';
@@ -245,15 +247,15 @@
             panel.classList.remove('hidden');
 
             try {
-                const response = await fetch('/api/ideas', {
+                const response = await fetch(FLOW_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ prompt, industry, aoiCategory })
+                    body: JSON.stringify({ area_not_addressed, client_industry, aoi_category })
                 });
 
                 const data = await response.json();
                 if (!response.ok) {
-                    throw new Error(data.error || 'AI request failed');
+                    throw new Error(data.error || 'Request failed');
                 }
 
                 list.innerHTML = '';
