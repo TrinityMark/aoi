@@ -336,6 +336,10 @@
                 if (radio) radio.checked = true;
             }
             syncAOI();
+            try {
+                const savedIdeas = JSON.parse(localStorage.getItem('ai-ideas'));
+                if (savedIdeas && savedIdeas.length) renderIdeas(savedIdeas, getSavedCheckedStates());
+            } catch {}
         }
 
         // ── Voice input ───────────────────────────────────────────────
@@ -422,6 +426,44 @@
         // ── AI ideas ──────────────────────────────────────────────────
         const FLOW_URL = 'https://bb06665214b0e7c9957df91fc7a08e.c0.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/5cdce877a561402c94b03243239610d8/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=TqtOAzyz7PUQIcLl3Ry6gqh9Z56B4ujkGIDnmr63P2E';
 
+        function renderIdeas(ideas, checkedStates = {}) {
+            const panel = document.getElementById('ai-ideas-panel');
+            const list = document.getElementById('ai-ideas-list');
+            list.innerHTML = '';
+            ideas.forEach((idea, index) => {
+                const trimmed = idea.trim();
+                if (!trimmed) return;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'flex items-start space-x-2';
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = `idea-${index}`;
+                checkbox.className = 'mt-1 h-4 w-4 text-[#15397F] border-gray-300 rounded flex-shrink-0';
+                checkbox.checked = !!checkedStates[index];
+                checkbox.addEventListener('change', () => {
+                    const states = getSavedCheckedStates();
+                    states[index] = checkbox.checked;
+                    localStorage.setItem('ai-ideas-checked', JSON.stringify(states));
+                });
+
+                const label = document.createElement('label');
+                label.htmlFor = checkbox.id;
+                label.className = 'text-gray-700';
+                label.innerHTML = trimmed.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+                wrapper.appendChild(checkbox);
+                wrapper.appendChild(label);
+                list.appendChild(wrapper);
+            });
+            panel.classList.remove('hidden');
+        }
+
+        function getSavedCheckedStates() {
+            try { return JSON.parse(localStorage.getItem('ai-ideas-checked') || '{}'); }
+            catch { return {}; }
+        }
+
         async function generateAIideas() {
             const button = document.getElementById('generate-ideas-button');
             const panel = document.getElementById('ai-ideas-panel');
@@ -447,27 +489,9 @@
                 const data = await response.json();
                 if (!response.ok) throw new Error(data.error || 'Request failed');
 
-                list.innerHTML = '';
-                data.ideas.forEach((idea, index) => {
-                    const trimmed = idea.trim();
-                    if (!trimmed) return;
-                    const wrapper = document.createElement('div');
-                    wrapper.className = 'flex items-start space-x-2';
-
-                    const checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-                    checkbox.id = `idea-${index}`;
-                    checkbox.className = 'mt-1 h-4 w-4 text-[#15397F] border-gray-300 rounded flex-shrink-0';
-
-                    const label = document.createElement('label');
-                    label.htmlFor = checkbox.id;
-                    label.className = 'text-gray-700';
-                    label.innerHTML = trimmed.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-
-                    wrapper.appendChild(checkbox);
-                    wrapper.appendChild(label);
-                    list.appendChild(wrapper);
-                });
+                localStorage.setItem('ai-ideas', JSON.stringify(data.ideas));
+                localStorage.removeItem('ai-ideas-checked');
+                renderIdeas(data.ideas);
             } catch (error) {
                 errorText.textContent = error.message;
                 errorText.classList.remove('hidden');
