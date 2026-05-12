@@ -18,16 +18,11 @@
         .accordion-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease-out;
-        }
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
+            transition: max-height 0.35s ease-out;
         }
         .accordion-content.active {
-            max-height: 2000px;
-            transition: max-height 0.3s ease-in;
+            max-height: none;
+            overflow: visible;
         }
         textarea,
         input[type="text"] {
@@ -218,9 +213,29 @@
         function toggleAccordion(index) {
             const content = document.getElementById(`content-${index}`);
             const icon = document.getElementById(`icon-${index}`);
+            const isOpen = content.classList.contains('active');
 
-            content.classList.toggle('active');
-            icon.style.transform = content.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+            if (isOpen) {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                content.style.overflow = 'hidden';
+                requestAnimationFrame(() => {
+                    content.style.transition = 'max-height 0.35s ease-out';
+                    content.style.maxHeight = '0';
+                });
+                content.classList.remove('active');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                content.style.overflow = 'hidden';
+                content.style.transition = 'max-height 0.35s ease-in';
+                content.classList.add('active');
+                icon.style.transform = 'rotate(180deg)';
+                content.addEventListener('transitionend', () => {
+                    content.style.maxHeight = 'none';
+                    content.style.overflow = 'visible';
+                    content.style.transition = '';
+                }, { once: true });
+            }
         }
 
         function syncAOI() {
