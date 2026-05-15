@@ -6,499 +6,698 @@
     <title>Business Alignment</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-        }
-        .accordion-button {
-            background: #15397F;
-        }
-        .accordion-button:hover {
-            background: #0f2f69;
-        }
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.35s ease-out;
-        }
-        .accordion-content.active {
-            max-height: none;
-            overflow: visible;
-        }
-        textarea, input[type="text"] {
-            font-size: 0.95rem;
-        }
-        .mic-btn {
-            position: absolute;
-            bottom: 8px;
-            right: 8px;
-            background: #15397F;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: opacity 0.2s, background 0.2s;
-        }
-        .mic-btn:hover { opacity: 1; }
-        .mic-btn.recording {
-            background: #dc2626;
-            opacity: 1;
-            animation: pulse 1s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(220,38,38,0.4); }
-            50% { box-shadow: 0 0 0 6px rgba(220,38,38,0); }
-        }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif; }
+
+        .accordion-button { background: #15397F; }
+        .accordion-button:hover { background: #0f2f69; }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.35s ease-out; }
+        .accordion-content.active { max-height: none; overflow: visible; }
+
+        textarea, input[type="text"] { font-size: 0.95rem; }
+
+        /* Mic button */
         .field-wrap { position: relative; }
         .field-wrap textarea, .field-wrap input[type="text"] { padding-right: 44px; }
+        .mic-btn {
+            position: absolute; bottom: 8px; right: 8px;
+            background: #15397F; color: white; border: none; border-radius: 50%;
+            width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; opacity: 0.7; transition: opacity 0.2s, background 0.2s;
+        }
+        .mic-btn:hover { opacity: 1; }
+        .mic-btn.recording { background: #dc2626; opacity: 1; animation: pulse 1s infinite; }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(220,38,38,0.4); }
+            50%       { box-shadow: 0 0 0 6px rgba(220,38,38,0); }
+        }
+
+        /* Progress steps */
+        .progress-step { display: flex; align-items: flex-start; gap: 12px; }
+        .step-icon {
+            width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center; margin-top: 2px;
+        }
+        .step-icon.pending { background: #e5e7eb; }
+        .step-icon.running { background: #15397F; }
+        .step-icon.done    { background: #16a34a; }
+        .step-icon.error   { background: #dc2626; }
+        @keyframes rotate { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="bg-gray-50">
-    <div class="min-h-screen">
-        <header class="bg-[#15397F] text-white shadow-lg">
-            <div class="max-w-full px-6 py-8">
-                <h1 class="text-4xl font-bold">Business Alignment</h1>
-                <p class="text-blue-100 mt-2">Area of Innovation (AOI), Unique Selling Proposition (USP) and Tagline</p>
-            </div>
-        </header>
+<div class="min-h-screen">
 
-        <main class="max-w-full px-6 py-8">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div class="lg:col-span-2 space-y-4">
+    <header class="bg-[#15397F] text-white shadow-lg">
+        <div class="max-w-full px-6 py-8">
+            <h1 class="text-4xl font-bold">Business Alignment</h1>
+            <p class="text-blue-100 mt-2">Area of Innovation (AOI), Unique Selling Proposition (USP) and Tagline</p>
+        </div>
+    </header>
 
-                    <!-- AOI Section -->
-                    <div class="bg-white rounded-lg shadow">
-                        <button class="accordion-button w-full px-6 py-4 text-white font-semibold text-lg flex justify-between items-center rounded-t-lg" onclick="toggleAccordion(0)">
-                            <span>Area of Innovation (AOI)</span>
-                            <svg class="w-5 h-5" id="icon-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="transform: rotate(180deg);">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                            </svg>
-                        </button>
-                        <div class="accordion-content active" id="content-0">
-                            <div class="px-6 py-4 space-y-6 bg-gray-50">
-                                <div>
-                                    <label class="block text-base font-semibold text-gray-700 mb-2">Enter your industry</label>
-                                    <input id="industry" type="text" oninput="saveToStorage()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]" placeholder="Eg. Diesel Mechanic, Cabinet Maker, Plumber, Commercial Builder">
-                                </div>
-                                <div>
-                                    <h3 class="font-semibold text-gray-900 mb-2">Choose your AOI Category:</h3>
-                                    <div class="space-y-2">
-                                        <label class="flex items-center">
-                                            <input type="radio" name="aoi-category" value="price" class="w-4 h-4" onchange="saveToStorage()">
-                                            <span class="ml-2">Price (the highest or the lowest)</span>
-                                        </label>
-                                        <label class="flex items-center">
-                                            <input type="radio" name="aoi-category" value="convenience" class="w-4 h-4" onchange="saveToStorage()">
-                                            <span class="ml-2">Convenience (built in or value added i.e. mobile service, faster turnaround)</span>
-                                        </label>
-                                        <label class="flex items-center">
-                                            <input type="radio" name="aoi-category" value="quality" class="w-4 h-4" onchange="saveToStorage()">
-                                            <span class="ml-2">Quality (Product/service superiority, unique features, customer service, expertise & workmanship, customisation)</span>
-                                        </label>
-                                    </div>
-                                </div>
+    <main class="max-w-full px-6 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-4">
 
-                                <div>
-                                    <h3 class="font-semibold text-gray-900 mb-3">Answer the Following Questions:</h3>
-                                    <div class="space-y-4">
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-1">1. What areas are currently not being well addressed by your industry? Enter your thoughts and/or tap Generate some ideas</label>
-                                            <button id="generate-ideas-button" onclick="generateAIideas()" class="mb-3 px-4 py-2 bg-[#15397F] text-white rounded hover:bg-[#0f2f69] transition">Generate some ideas</button>
-                                            <div class="field-wrap">
-                                                <textarea id="question-1" oninput="saveToStorage()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]" rows="3"></textarea>
-                                                <button class="mic-btn" onclick="startVoice('question-1', this)" title="Speak">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-                                                </button>
-                                            </div>
-                                            <div id="ai-ideas-panel" class="mt-4 p-4 bg-white border border-gray-200 rounded-lg hidden">
-                                                <p id="ai-ideas-error" class="text-red-600 text-sm mb-3 hidden"></p>
-                                                <div class="space-y-3" id="ai-ideas-list"></div>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-1">2. What are the strengths and abilities of your company?</label>
-                                            <div class="field-wrap">
-                                                <textarea id="question-2" oninput="saveToStorage()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]" rows="3"></textarea>
-                                                <button class="mic-btn" onclick="startVoice('question-2', this)" title="Speak">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-1">3. What does the market want most from your industry or business?</label>
-                                            <div class="field-wrap">
-                                                <textarea id="question-3" oninput="saveToStorage()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]" rows="3"></textarea>
-                                                <button class="mic-btn" onclick="startVoice('question-3', this)" title="Speak">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label class="block text-sm font-medium text-gray-700 mb-1">4. Click the button below to generate your AOI. You can edit and update once it's generated.</label>
-                                            <div class="field-wrap">
-                                                <textarea id="aoi-description" oninput="syncAOI(); saveToStorage();" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]" rows="3" placeholder="Type your Area of Innovation here..."></textarea>
-                                                <button class="mic-btn" onclick="startVoice('aoi-description', this)" title="Speak">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                <!-- ── AOI Section ─────────────────────────────────────── -->
+                <div class="bg-white rounded-lg shadow">
+                    <button class="accordion-button w-full px-6 py-4 text-white font-semibold text-lg flex justify-between items-center rounded-t-lg" onclick="toggleAccordion(0)">
+                        <span>Area of Innovation (AOI)</span>
+                        <svg class="w-5 h-5" id="icon-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="transform:rotate(180deg)">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                        </svg>
+                    </button>
+                    <div class="accordion-content active" id="content-0">
+                        <div class="px-6 py-4 space-y-6 bg-gray-50">
+
+                            <!-- Clear button -->
+                            <div class="flex justify-end -mb-2">
+                                <button id="clear-btn" onclick="clearForm()" class="hidden text-sm text-gray-400 hover:text-red-500 transition flex items-center gap-1">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                    Clear and start again
+                                </button>
+                            </div>
+
+                            <!-- Industry -->
+                            <div>
+                                <label class="block text-base font-semibold text-gray-700 mb-2">Enter your industry:</label>
+                                <input id="industry" type="text" oninput="saveToStorage()"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]"
+                                    placeholder="Eg. Diesel Mechanic, Cabinet Maker, Plumber, Commercial Builder">
+                            </div>
+
+                            <!-- AOI Category -->
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-2">Choose your AOI Category:</h3>
+                                <div class="space-y-2">
+                                    <label class="flex items-center">
+                                        <input type="radio" name="aoi-category" value="price" class="w-4 h-4" onchange="saveToStorage()">
+                                        <span class="ml-2">Price (the highest or the lowest)</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="radio" name="aoi-category" value="convenience" class="w-4 h-4" onchange="saveToStorage()">
+                                        <span class="ml-2">Convenience (built in or value added i.e. mobile service, faster turnaround)</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="radio" name="aoi-category" value="quality" class="w-4 h-4" onchange="saveToStorage()">
+                                        <span class="ml-2">Quality (Product/service superiority, unique features, customer service, expertise &amp; workmanship, customisation)</span>
+                                    </label>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <!-- USP Section -->
-                    <div class="bg-white rounded-lg shadow">
-                        <button class="accordion-button w-full px-6 py-4 text-white font-semibold text-lg flex justify-between items-center rounded-t-lg" onclick="toggleAccordion(1)">
-                            <span>Unique Selling Proposition (USP)</span>
-                            <svg class="w-5 h-5" id="icon-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                            </svg>
-                        </button>
-                        <div class="accordion-content" id="content-1">
-                            <div class="px-6 py-4 space-y-6 bg-gray-50">
-                                <div class="space-y-4">
+                            <!-- Generate Panel -->
+                            <div class="bg-blue-50 border border-blue-100 rounded-lg p-5 space-y-5">
+                                <h3 class="font-semibold text-gray-900">Upload your SWOT and Mission Vision Values files:</h3>
+
+                                <!-- File Uploads -->
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">1. Identify your target audience:</label>
-                                        <div class="field-wrap">
-                                            <textarea id="usp-1" oninput="saveToStorage()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]" rows="3"></textarea>
-                                            <button class="mic-btn" onclick="startVoice('usp-1', this)" title="Speak">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-                                            </button>
-                                        </div>
+                                        <label class="block text-xs font-semibold text-gray-600 mb-1">SWOT Document</label>
+                                        <label class="flex items-center gap-2 px-3 py-2 bg-white border border-gray-300 rounded-md cursor-pointer hover:border-[#15397F] transition">
+                                            <svg class="w-4 h-4 text-[#15397F] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                                            </svg>
+                                            <span id="swot-label" class="text-sm text-gray-500 truncate">Choose file...</span>
+                                            <input id="swot-file" type="file" accept=".csv,.txt" class="hidden" onchange="updateFileLabel('swot-file','swot-label')">
+                                        </label>
                                     </div>
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">2. List the benefits you offer:</label>
-                                        <div class="field-wrap">
-                                            <textarea id="usp-2" oninput="saveToStorage()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]" rows="3"></textarea>
-                                            <button class="mic-btn" onclick="startVoice('usp-2', this)" title="Speak">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">3. Define your brand promise:</label>
-                                        <div class="field-wrap">
-                                            <textarea id="usp-3" oninput="saveToStorage()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]" rows="3"></textarea>
-                                            <button class="mic-btn" onclick="startVoice('usp-3', this)" title="Speak">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-                                            </button>
-                                        </div>
+                                        <label class="block text-xs font-semibold text-gray-600 mb-1">MVV Document</label>
+                                        <label class="flex items-center gap-2 px-3 py-2 bg-white border border-gray-300 rounded-md cursor-pointer hover:border-[#15397F] transition">
+                                            <svg class="w-4 h-4 text-[#15397F] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                                            </svg>
+                                            <span id="mvv-label" class="text-sm text-gray-500 truncate">Choose file...</span>
+                                            <input id="mvv-file" type="file" accept=".csv,.txt" class="hidden" onchange="updateFileLabel('mvv-file','mvv-label')">
+                                        </label>
                                     </div>
                                 </div>
-                                <div class="bg-white p-4 rounded border border-gray-200">
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Your USP Statement:</label>
+
+                                <!-- Progress -->
+                                <div id="progress-panel" class="hidden space-y-4 pt-1">
+                                    <div class="progress-step">
+                                        <div class="step-icon pending" id="step-docs-icon">
+                                            <svg viewBox="0 0 24 24" fill="#9ca3af" class="w-3 h-3"><circle cx="12" cy="12" r="4"/></svg>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-gray-800">Analysing your business documents</p>
+                                            <p class="text-xs text-gray-500 mt-0.5" id="step-docs-detail">Waiting...</p>
+                                        </div>
+                                    </div>
+                                    <div class="progress-step">
+                                        <div class="step-icon pending" id="step-market-icon">
+                                            <svg viewBox="0 0 24 24" fill="#9ca3af" class="w-3 h-3"><circle cx="12" cy="12" r="4"/></svg>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-gray-800">Researching the market</p>
+                                            <p class="text-xs text-gray-500 mt-0.5" id="step-market-detail">Waiting...</p>
+                                        </div>
+                                    </div>
+                                    <div class="progress-step">
+                                        <div class="step-icon pending" id="step-aoi-icon">
+                                            <svg viewBox="0 0 24 24" fill="#9ca3af" class="w-3 h-3"><circle cx="12" cy="12" r="4"/></svg>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-gray-800">Generating your AOI</p>
+                                            <p class="text-xs text-gray-500 mt-0.5" id="step-aoi-detail">Waiting...</p>
+                                        </div>
+                                    </div>
+                                    <p id="progress-error" class="text-sm text-red-600 hidden"></p>
+                                </div>
+                            </div>
+
+                            <!-- Review Section (shown only after all flows complete) -->
+                            <div id="review-section" class="hidden space-y-4">
+                                <h3 class="font-semibold text-gray-900">Review &amp; Edit</h3>
+                                <p class="text-sm text-gray-500 -mt-2">The AI has pre-filled these from your documents. Edit if needed.</p>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Areas not being well addressed by your industry</label>
+                                    <textarea id="question-1" rows="4" oninput="saveToStorage()"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]"></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Strengths and abilities of your company</label>
+                                    <textarea id="question-2" rows="4" oninput="saveToStorage()"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]"></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">What the market wants most</label>
+                                    <textarea id="question-3" rows="4" oninput="saveToStorage()"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Generate Button (outside blue box, below review fields) -->
+                            <button id="generate-aoi-btn" onclick="generateAOI()"
+                                class="w-full py-3 bg-[#15397F] text-white font-semibold rounded-md hover:bg-[#0f2f69] transition text-base">
+                                Generate AOI
+                            </button>
+
+                            <!-- AOI Options (shown after generation) -->
+                            <div id="aoi-options-section" class="hidden space-y-3">
+                                <h3 class="font-semibold text-gray-900">Your AOI Options</h3>
+                                <p class="text-sm text-gray-500">Select the option that best fits your business. You can edit it after selecting.</p>
+                                <div id="aoi-options-list" class="space-y-3"></div>
+                            </div>
+
+                            <!-- Final AOI field (shown after option selected) -->
+                            <div id="aoi-final-section" class="hidden">
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Your Area of Innovation</label>
+                                <div class="field-wrap">
+                                    <textarea id="aoi-description" rows="4" oninput="syncAOI(); saveToStorage();"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]"></textarea>
+                                    <button class="mic-btn" onclick="startVoice('aoi-description',this)" title="Speak">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── USP Section ──────────────────────────────────────── -->
+                <div class="bg-white rounded-lg shadow">
+                    <button class="accordion-button w-full px-6 py-4 text-white font-semibold text-lg flex justify-between items-center rounded-t-lg" onclick="toggleAccordion(1)">
+                        <span>Unique Selling Proposition (USP)</span>
+                        <svg class="w-5 h-5" id="icon-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                        </svg>
+                    </button>
+                    <div class="accordion-content" id="content-1">
+                        <div class="px-6 py-4 space-y-6 bg-gray-50">
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">1. Identify your target audience:</label>
                                     <div class="field-wrap">
-                                        <textarea id="usp-statement" oninput="saveToStorage()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]" rows="4" placeholder="Your AI-generated USP will appear here..."></textarea>
-                                        <button class="mic-btn" onclick="startVoice('usp-statement', this)" title="Speak">
+                                        <textarea id="usp-1" rows="3" oninput="saveToStorage()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]"></textarea>
+                                        <button class="mic-btn" onclick="startVoice('usp-1',this)" title="Speak">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
                                         </button>
                                     </div>
-                                    <button class="mt-3 px-4 py-2 bg-[#15397F] text-white rounded hover:bg-[#0f2f69] transition">Generate USP Statement</button>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">2. List the benefits you offer:</label>
+                                    <div class="field-wrap">
+                                        <textarea id="usp-2" rows="3" oninput="saveToStorage()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]"></textarea>
+                                        <button class="mic-btn" onclick="startVoice('usp-2',this)" title="Speak">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">3. Define your brand promise:</label>
+                                    <div class="field-wrap">
+                                        <textarea id="usp-3" rows="3" oninput="saveToStorage()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]"></textarea>
+                                        <button class="mic-btn" onclick="startVoice('usp-3',this)" title="Speak">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- Tagline Section -->
-                    <div class="bg-white rounded-lg shadow">
-                        <button class="accordion-button w-full px-6 py-4 text-white font-semibold text-lg flex justify-between items-center rounded-t-lg" onclick="toggleAccordion(2)">
-                            <span>Tagline</span>
-                            <svg class="w-5 h-5" id="icon-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                            </svg>
-                        </button>
-                        <div class="accordion-content" id="content-2">
-                            <div class="px-6 py-4 space-y-6 bg-gray-50">
-                                <div class="space-y-4">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">1. What's your core message?</label>
-                                        <div class="field-wrap">
-                                            <textarea id="tagline-1" oninput="saveToStorage()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]" rows="3"></textarea>
-                                            <button class="mic-btn" onclick="startVoice('tagline-1', this)" title="Speak">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">2. What emotion do you want to evoke?</label>
-                                        <div class="field-wrap">
-                                            <textarea id="tagline-2" oninput="saveToStorage()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]" rows="3"></textarea>
-                                            <button class="mic-btn" onclick="startVoice('tagline-2', this)" title="Speak">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">3. What makes you memorable?</label>
-                                        <div class="field-wrap">
-                                            <textarea id="tagline-3" oninput="saveToStorage()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]" rows="3"></textarea>
-                                            <button class="mic-btn" onclick="startVoice('tagline-3', this)" title="Speak">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-                                            </button>
-                                        </div>
-                                    </div>
+                            <div class="bg-white p-4 rounded border border-gray-200">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Your USP Statement:</label>
+                                <div class="field-wrap">
+                                    <textarea id="usp-statement" rows="4" oninput="saveToStorage()" placeholder="Your USP will appear here..." class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]"></textarea>
+                                    <button class="mic-btn" onclick="startVoice('usp-statement',this)" title="Speak">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+                                    </button>
                                 </div>
-                                <div class="bg-white p-4 rounded border border-gray-200">
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Your Tagline Options:</label>
-                                    <div class="space-y-2 mb-4">
-                                        <div class="field-wrap">
-                                            <input id="tagline-opt-1" type="text" oninput="saveToStorage()" placeholder="Option 1" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]">
-                                            <button class="mic-btn" onclick="startVoice('tagline-opt-1', this)" title="Speak">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-                                            </button>
-                                        </div>
-                                        <div class="field-wrap">
-                                            <input id="tagline-opt-2" type="text" oninput="saveToStorage()" placeholder="Option 2" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]">
-                                            <button class="mic-btn" onclick="startVoice('tagline-opt-2', this)" title="Speak">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-                                            </button>
-                                        </div>
-                                        <div class="field-wrap">
-                                            <input id="tagline-opt-3" type="text" oninput="saveToStorage()" placeholder="Option 3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]">
-                                            <button class="mic-btn" onclick="startVoice('tagline-opt-3', this)" title="Speak">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <button class="px-4 py-2 bg-[#15397F] text-white rounded hover:bg-[#0f2f69] transition">Generate Tagline Options</button>
-                                </div>
+                                <button class="mt-3 px-4 py-2 bg-[#15397F] text-white rounded hover:bg-[#0f2f69] transition">Generate USP Statement</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Panel: Summary -->
-                <div class="lg:col-span-1">
-                    <div class="bg-white rounded-lg shadow p-6 sticky top-8">
-                        <h2 class="text-xl font-bold text-gray-900 mb-4">Your Positioning Summary</h2>
-                        <div class="space-y-4">
-                            <div>
-                                <h3 class="font-semibold text-gray-700 text-sm">Area of Innovation</h3>
-                                <p id="aoi-summary-text" class="text-gray-600 text-sm mt-1">(Not yet generated)</p>
+                <!-- ── Tagline Section ─────────────────────────────────── -->
+                <div class="bg-white rounded-lg shadow">
+                    <button class="accordion-button w-full px-6 py-4 text-white font-semibold text-lg flex justify-between items-center rounded-t-lg" onclick="toggleAccordion(2)">
+                        <span>Tagline</span>
+                        <svg class="w-5 h-5" id="icon-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                        </svg>
+                    </button>
+                    <div class="accordion-content" id="content-2">
+                        <div class="px-6 py-4 space-y-6 bg-gray-50">
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">1. What's your core message?</label>
+                                    <div class="field-wrap">
+                                        <textarea id="tagline-1" rows="3" oninput="saveToStorage()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]"></textarea>
+                                        <button class="mic-btn" onclick="startVoice('tagline-1',this)" title="Speak">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">2. What emotion do you want to evoke?</label>
+                                    <div class="field-wrap">
+                                        <textarea id="tagline-2" rows="3" oninput="saveToStorage()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]"></textarea>
+                                        <button class="mic-btn" onclick="startVoice('tagline-2',this)" title="Speak">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">3. What makes you memorable?</label>
+                                    <div class="field-wrap">
+                                        <textarea id="tagline-3" rows="3" oninput="saveToStorage()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]"></textarea>
+                                        <button class="mic-btn" onclick="startVoice('tagline-3',this)" title="Speak">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="border-t pt-4">
-                                <h3 class="font-semibold text-gray-700 text-sm">Unique Selling Proposition</h3>
-                                <p class="text-gray-600 text-sm mt-1">(Not yet generated)</p>
+                            <div class="bg-white p-4 rounded border border-gray-200">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Your Tagline Options:</label>
+                                <div class="space-y-2 mb-4">
+                                    <div class="field-wrap">
+                                        <input id="tagline-opt-1" type="text" oninput="saveToStorage()" placeholder="Option 1" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]">
+                                        <button class="mic-btn" onclick="startVoice('tagline-opt-1',this)" title="Speak">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+                                        </button>
+                                    </div>
+                                    <div class="field-wrap">
+                                        <input id="tagline-opt-2" type="text" oninput="saveToStorage()" placeholder="Option 2" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]">
+                                        <button class="mic-btn" onclick="startVoice('tagline-opt-2',this)" title="Speak">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+                                        </button>
+                                    </div>
+                                    <div class="field-wrap">
+                                        <input id="tagline-opt-3" type="text" oninput="saveToStorage()" placeholder="Option 3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]">
+                                        <button class="mic-btn" onclick="startVoice('tagline-opt-3',this)" title="Speak">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <button class="px-4 py-2 bg-[#15397F] text-white rounded hover:bg-[#0f2f69] transition">Generate Tagline Options</button>
                             </div>
-                            <div class="border-t pt-4">
-                                <h3 class="font-semibold text-gray-700 text-sm">Tagline</h3>
-                                <p class="text-gray-600 text-sm mt-1">(Not yet generated)</p>
-                            </div>
-                            <div class="border-t pt-4 space-y-2">
-                                <button class="w-full px-4 py-2 bg-[#15397F] text-white rounded hover:bg-[#0f2f69] transition">Download PDF</button>
-                                <button class="w-full px-4 py-2 border border-[#15397F] text-[#15397F] rounded hover:bg-blue-50 transition">Send via Email</button>
-                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ── Summary Panel ───────────────────────────────────────── -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-lg shadow p-6 sticky top-8">
+                    <h2 class="text-xl font-bold text-gray-900 mb-4">Your Positioning Summary</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="font-semibold text-gray-700 text-sm">Area of Innovation</h3>
+                            <p id="aoi-summary-text" class="text-gray-600 text-sm mt-1">(Not yet generated)</p>
+                        </div>
+                        <div class="border-t pt-4">
+                            <h3 class="font-semibold text-gray-700 text-sm">Unique Selling Proposition</h3>
+                            <p class="text-gray-600 text-sm mt-1">(Not yet generated)</p>
+                        </div>
+                        <div class="border-t pt-4">
+                            <h3 class="font-semibold text-gray-700 text-sm">Tagline</h3>
+                            <p class="text-gray-600 text-sm mt-1">(Not yet generated)</p>
+                        </div>
+                        <div class="border-t pt-4 space-y-2">
+                            <button class="w-full px-4 py-2 bg-[#15397F] text-white rounded hover:bg-[#0f2f69] transition">Download PDF</button>
+                            <button class="w-full px-4 py-2 border border-[#15397F] text-[#15397F] rounded hover:bg-blue-50 transition">Send via Email</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
+</div>
 
-    <script>
-        // ── localStorage ──────────────────────────────────────────────
-        const TEXT_FIELDS = [
-            'industry','question-1','question-2','question-3','aoi-description',
-            'usp-1','usp-2','usp-3','usp-statement',
-            'tagline-1','tagline-2','tagline-3','tagline-opt-1','tagline-opt-2','tagline-opt-3'
-        ];
+<script>
+    // ── Flow URL (replace when flow is ready) ─────────────────────────────
+    const AOI_FLOW_URL = 'https://bb06665214b0e7c9957df91fc7a08e.c0.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/5cdce877a561402c94b03243239610d8/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=TqtOAzyz7PUQIcLl3Ry6gqh9Z56B4ujkGIDnmr63P2E';
 
-        function saveToStorage() {
-            TEXT_FIELDS.forEach(id => {
-                const el = document.getElementById(id);
-                if (el) localStorage.setItem(id, el.value);
+    // ── localStorage ──────────────────────────────────────────────────────
+    const TEXT_FIELDS = [
+        'industry','question-1','question-2','question-3','aoi-description',
+        'usp-1','usp-2','usp-3','usp-statement',
+        'tagline-1','tagline-2','tagline-3','tagline-opt-1','tagline-opt-2','tagline-opt-3'
+    ];
+
+    function saveToStorage() {
+        TEXT_FIELDS.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) localStorage.setItem(id, el.value);
+        });
+        const radio = document.querySelector('input[name="aoi-category"]:checked');
+        if (radio) localStorage.setItem('aoi-category', radio.value);
+        updateClearButton();
+    }
+
+    function restoreFromStorage() {
+        TEXT_FIELDS.forEach(id => {
+            const el = document.getElementById(id);
+            const val = localStorage.getItem(id);
+            if (el && val) el.value = val;
+        });
+        const cat = localStorage.getItem('aoi-category');
+        if (cat) {
+            const r = document.querySelector(`input[name="aoi-category"][value="${cat}"]`);
+            if (r) r.checked = true;
+        }
+        syncAOI();
+
+        const aoi = localStorage.getItem('aoi-description');
+        if (aoi) {
+            document.getElementById('aoi-final-section').classList.remove('hidden');
+            document.getElementById('aoi-summary-text').textContent = aoi;
+        }
+
+        try {
+            const opts = JSON.parse(localStorage.getItem('aoi-options'));
+            if (opts?.length) {
+                document.getElementById('review-section').classList.remove('hidden');
+                showAOIOptions(opts);
+            }
+        } catch {}
+
+        updateClearButton();
+    }
+
+    // ── File label update ─────────────────────────────────────────────────
+    function updateFileLabel(inputId, labelId) {
+        const file = document.getElementById(inputId).files[0];
+        const label = document.getElementById(labelId);
+        label.textContent = file ? file.name : 'Choose file...';
+        label.className = file
+            ? 'text-sm text-gray-800 font-medium truncate'
+            : 'text-sm text-gray-500 truncate';
+    }
+
+    // ── Voice input ───────────────────────────────────────────────────────
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let activeRecognition = null, activeMicBtn = null;
+
+    function startVoice(fieldId, btnEl) {
+        if (!SpeechRecognition) { alert('Voice input not supported. Please use Chrome or Edge.'); return; }
+        if (activeRecognition) { activeRecognition.stop(); return; }
+
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'en-AU';
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        activeRecognition = recognition;
+        activeMicBtn = btnEl;
+        btnEl.classList.add('recording');
+
+        recognition.onresult = e => {
+            const t = e.results[0][0].transcript;
+            const field = document.getElementById(fieldId);
+            field.value = field.value ? field.value + ' ' + t : t;
+            saveToStorage();
+            if (fieldId === 'aoi-description') syncAOI();
+        };
+        recognition.onend = recognition.onerror = () => {
+            activeRecognition = null;
+            if (activeMicBtn) activeMicBtn.classList.remove('recording');
+            activeMicBtn = null;
+        };
+        recognition.start();
+    }
+
+    // ── Accordion ─────────────────────────────────────────────────────────
+    function toggleAccordion(index) {
+        const content = document.getElementById(`content-${index}`);
+        const icon    = document.getElementById(`icon-${index}`);
+        const isOpen  = content.classList.contains('active');
+
+        if (isOpen) {
+            content.style.maxHeight = content.scrollHeight + 'px';
+            content.style.overflow  = 'hidden';
+            requestAnimationFrame(() => {
+                content.style.transition = 'max-height 0.35s ease-out';
+                content.style.maxHeight  = '0';
             });
-            const radio = document.querySelector('input[name="aoi-category"]:checked');
-            if (radio) localStorage.setItem('aoi-category', radio.value);
+            content.classList.remove('active');
+            icon.style.transform = 'rotate(0deg)';
+        } else {
+            content.style.maxHeight = content.scrollHeight + 'px';
+            content.style.overflow  = 'hidden';
+            content.style.transition = 'max-height 0.35s ease-in';
+            content.classList.add('active');
+            icon.style.transform = 'rotate(180deg)';
+            content.addEventListener('transitionend', () => {
+                content.style.maxHeight  = 'none';
+                content.style.overflow   = 'visible';
+                content.style.transition = '';
+            }, { once: true });
+        }
+    }
+
+    // ── AOI summary sync ──────────────────────────────────────────────────
+    function syncAOI() {
+        const val = document.getElementById('aoi-description').value.trim();
+        document.getElementById('aoi-summary-text').textContent = val || '(Not yet generated)';
+    }
+
+    // ── Progress indicator ────────────────────────────────────────────────
+    const ICONS = {
+        pending: `<svg viewBox="0 0 24 24" fill="#9ca3af" class="w-3 h-3"><circle cx="12" cy="12" r="4"/></svg>`,
+        running: `<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="animation:rotate 1s linear infinite;transform-origin:center"><path stroke-linecap="round" d="M12 2a10 10 0 0 1 0 20"/></svg>`,
+        done:    `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>`,
+        error:   `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" class="w-4 h-4"><path stroke-linecap="round" d="M18 6L6 18M6 6l12 12"/></svg>`,
+    };
+
+    function setStepStatus(iconId, detailId, status, detail) {
+        const icon = document.getElementById(iconId);
+        icon.className = `step-icon ${status}`;
+        icon.innerHTML = ICONS[status];
+        if (detail) document.getElementById(detailId).textContent = detail;
+    }
+
+    // ── File reader ───────────────────────────────────────────────────────
+    function readFileAsText(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload  = e => resolve(e.target.result);
+            reader.onerror = () => reject(new Error('Could not read file'));
+            reader.readAsText(file);
+        });
+    }
+
+    // ── AOI options display ───────────────────────────────────────────────
+    function showAOIOptions(options) {
+        const section = document.getElementById('aoi-options-section');
+        const list    = document.getElementById('aoi-options-list');
+        list.innerHTML = '';
+        options.forEach((opt, i) => {
+            const trimmed = opt.trim();
+            if (!trimmed) return;
+            const card = document.createElement('div');
+            card.className = 'bg-white border border-gray-200 rounded-lg p-4 space-y-3';
+            card.innerHTML = `
+                <p class="text-xs font-semibold text-[#15397F] uppercase tracking-wide">Option ${i + 1}</p>
+                <p class="text-sm text-gray-700 leading-relaxed">${trimmed}</p>
+                <button onclick="useAOI(${JSON.stringify(trimmed)})"
+                    class="text-sm px-4 py-1.5 bg-[#15397F] text-white rounded hover:bg-[#0f2f69] transition">
+                    Use this AOI
+                </button>`;
+            list.appendChild(card);
+        });
+        section.classList.remove('hidden');
+        localStorage.setItem('aoi-options', JSON.stringify(options));
+    }
+
+    function useAOI(text) {
+        const field = document.getElementById('aoi-description');
+        field.value = text;
+        document.getElementById('aoi-summary-text').textContent = text;
+        saveToStorage();
+        const finalSection = document.getElementById('aoi-final-section');
+        finalSection.classList.remove('hidden');
+        finalSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ── Clear form ────────────────────────────────────────────────────────
+    function clearForm() {
+        if (!confirm('Clear all data and start again?')) return;
+
+        [...TEXT_FIELDS, 'aoi-category', 'aoi-options'].forEach(k => localStorage.removeItem(k));
+
+        TEXT_FIELDS.forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+        document.querySelectorAll('input[name="aoi-category"]').forEach(r => r.checked = false);
+
+        ['review-section','aoi-options-section','aoi-final-section','progress-panel'].forEach(id =>
+            document.getElementById(id).classList.add('hidden')
+        );
+
+        document.getElementById('aoi-options-list').innerHTML = '';
+        document.getElementById('aoi-summary-text').textContent = '(Not yet generated)';
+        document.getElementById('swot-label').textContent = 'Choose file...';
+        document.getElementById('mvv-label').textContent = 'Choose file...';
+        document.getElementById('swot-file').value = '';
+        document.getElementById('mvv-file').value = '';
+
+        updateClearButton();
+    }
+
+    function updateClearButton() {
+        const hasContent = TEXT_FIELDS.some(id => localStorage.getItem(id))
+            || localStorage.getItem('aoi-category')
+            || localStorage.getItem('aoi-options');
+        document.getElementById('clear-btn').classList.toggle('hidden', !hasContent);
+    }
+
+    // ── Flow call helper ──────────────────────────────────────────────────
+    async function callFlow(mode, payload) {
+        const res = await fetch(AOI_FLOW_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ mode, ...payload })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || `Flow error (${res.status})`);
+        return data;
+    }
+
+    // ── Generate AOI ──────────────────────────────────────────────────────
+    async function generateAOI() {
+        const industry    = document.getElementById('industry').value.trim();
+        const aoi_category = document.querySelector('input[name="aoi-category"]:checked')?.value || '';
+        const swotFile    = document.getElementById('swot-file').files[0];
+        const mvvFile     = document.getElementById('mvv-file').files[0];
+
+        const btn          = document.getElementById('generate-aoi-btn');
+        const progressPanel = document.getElementById('progress-panel');
+        const progressError = document.getElementById('progress-error');
+
+        btn.disabled = true;
+        btn.textContent = 'Generating...';
+        progressPanel.classList.remove('hidden');
+        progressError.classList.add('hidden');
+
+        // Reset all steps
+        ['docs','market','aoi'].forEach(s =>
+            setStepStatus(`step-${s}-icon`, `step-${s}-detail`, 'pending', 'Waiting...')
+        );
+
+        // Read files
+        const swot_csv = swotFile ? await readFileAsText(swotFile) : '';
+        const mvv_csv  = mvvFile  ? await readFileAsText(mvvFile)  : '';
+
+        // Step 1 + 2 in parallel
+        setStepStatus('step-docs-icon',   'step-docs-detail',   'running', 'Analysing your documents...');
+        setStepStatus('step-market-icon', 'step-market-detail', 'running', 'Researching the market...');
+
+        const [docsResult, marketResult] = await Promise.allSettled([
+            callFlow('analyse_files',    { industry, aoi_category, swot_csv, mvv_csv }),
+            callFlow('market_research',  { industry })
+        ]);
+
+        let q1 = '', q2 = '', q3 = '';
+
+        if (docsResult.status === 'fulfilled') {
+            setStepStatus('step-docs-icon', 'step-docs-detail', 'done', 'Complete');
+            q1 = docsResult.value.q1 || '';
+            q2 = docsResult.value.q2 || '';
+        } else {
+            setStepStatus('step-docs-icon', 'step-docs-detail', 'error', docsResult.reason?.message || 'Failed');
         }
 
-        function restoreFromStorage() {
-            TEXT_FIELDS.forEach(id => {
-                const el = document.getElementById(id);
-                const val = localStorage.getItem(id);
-                if (el && val) el.value = val;
-            });
-            const savedCategory = localStorage.getItem('aoi-category');
-            if (savedCategory) {
-                const radio = document.querySelector(`input[name="aoi-category"][value="${savedCategory}"]`);
-                if (radio) radio.checked = true;
-            }
-            syncAOI();
-            try {
-                const savedIdeas = JSON.parse(localStorage.getItem('ai-ideas'));
-                if (savedIdeas && savedIdeas.length) renderIdeas(savedIdeas, getSavedCheckedStates());
-            } catch {}
+        if (marketResult.status === 'fulfilled') {
+            setStepStatus('step-market-icon', 'step-market-detail', 'done', 'Complete');
+            q3 = marketResult.value.q3 || marketResult.value.analysis || '';
+        } else {
+            setStepStatus('step-market-icon', 'step-market-detail', 'error', marketResult.reason?.message || 'Failed');
         }
 
-        // ── Voice input ───────────────────────────────────────────────
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        let activeRecognition = null;
-        let activeMicBtn = null;
+        // Populate review fields (hidden until step 3 completes)
+        if (q1) document.getElementById('question-1').value = q1;
+        if (q2) document.getElementById('question-2').value = q2;
+        if (q3) document.getElementById('question-3').value = q3;
+        saveToStorage();
 
-        function startVoice(fieldId, btnEl) {
-            if (!SpeechRecognition) {
-                alert('Voice input is not supported in this browser. Please use Chrome or Edge.');
-                return;
-            }
-            if (activeRecognition) {
-                activeRecognition.stop();
-                return;
-            }
-            const recognition = new SpeechRecognition();
-            recognition.lang = 'en-AU';
-            recognition.continuous = false;
-            recognition.interimResults = false;
+        // Step 3 — generate AOI options
+        setStepStatus('step-aoi-icon', 'step-aoi-detail', 'running', 'Generating your AOI options...');
 
-            activeRecognition = recognition;
-            activeMicBtn = btnEl;
-            btnEl.classList.add('recording');
+        q1 = document.getElementById('question-1').value;
+        q2 = document.getElementById('question-2').value;
+        q3 = document.getElementById('question-3').value;
 
-            recognition.onresult = (e) => {
-                const transcript = e.results[0][0].transcript;
-                const field = document.getElementById(fieldId);
-                field.value = field.value ? field.value + ' ' + transcript : transcript;
-                saveToStorage();
-                if (fieldId === 'aoi-description') syncAOI();
-            };
-
-            recognition.onend = () => {
-                activeRecognition = null;
-                if (activeMicBtn) activeMicBtn.classList.remove('recording');
-                activeMicBtn = null;
-            };
-
-            recognition.onerror = () => {
-                activeRecognition = null;
-                if (activeMicBtn) activeMicBtn.classList.remove('recording');
-                activeMicBtn = null;
-            };
-
-            recognition.start();
+        try {
+            const aoiData = await callFlow('generate_aoi', { industry, aoi_category, q1, q2, q3 });
+            if (!aoiData.options?.length) throw new Error('No options returned');
+            setStepStatus('step-aoi-icon', 'step-aoi-detail', 'done', 'Complete');
+            document.getElementById('review-section').classList.remove('hidden');
+            showAOIOptions(aoiData.options);
+        } catch (err) {
+            setStepStatus('step-aoi-icon', 'step-aoi-detail', 'error', err.message);
+            progressError.textContent = 'Could not generate AOI options. Check the flow and try again.';
+            progressError.classList.remove('hidden');
         }
 
-        // ── Accordion ─────────────────────────────────────────────────
-        function toggleAccordion(index) {
-            const content = document.getElementById(`content-${index}`);
-            const icon = document.getElementById(`icon-${index}`);
-            const isOpen = content.classList.contains('active');
+        btn.disabled = false;
+        btn.textContent = 'Generate AOI';
+    }
 
-            if (isOpen) {
-                content.style.maxHeight = content.scrollHeight + 'px';
-                content.style.overflow = 'hidden';
-                requestAnimationFrame(() => {
-                    content.style.transition = 'max-height 0.35s ease-out';
-                    content.style.maxHeight = '0';
-                });
-                content.classList.remove('active');
-                icon.style.transform = 'rotate(0deg)';
-            } else {
-                content.style.maxHeight = content.scrollHeight + 'px';
-                content.style.overflow = 'hidden';
-                content.style.transition = 'max-height 0.35s ease-in';
-                content.classList.add('active');
-                icon.style.transform = 'rotate(180deg)';
-                content.addEventListener('transitionend', () => {
-                    content.style.maxHeight = 'none';
-                    content.style.overflow = 'visible';
-                    content.style.transition = '';
-                }, { once: true });
-            }
+    // ── Regenerate AOI options only ───────────────────────────────────────
+    async function regenerateAOI() {
+        const industry     = document.getElementById('industry').value.trim();
+        const aoi_category = document.querySelector('input[name="aoi-category"]:checked')?.value || '';
+        const q1 = document.getElementById('question-1').value;
+        const q2 = document.getElementById('question-2').value;
+        const q3 = document.getElementById('question-3').value;
+
+        setStepStatus('step-aoi-icon', 'step-aoi-detail', 'running', 'Regenerating...');
+        document.getElementById('progress-panel').classList.remove('hidden');
+
+        try {
+            const data = await callFlow('generate_aoi', { industry, aoi_category, q1, q2, q3 });
+            if (!data.options?.length) throw new Error('No options returned');
+            setStepStatus('step-aoi-icon', 'step-aoi-detail', 'done', 'Complete');
+            showAOIOptions(data.options);
+        } catch (err) {
+            setStepStatus('step-aoi-icon', 'step-aoi-detail', 'error', err.message);
         }
+    }
 
-        // ── AOI summary sync ──────────────────────────────────────────
-        function syncAOI() {
-            const value = document.getElementById('aoi-description').value.trim();
-            document.getElementById('aoi-summary-text').textContent = value || '(Not yet generated)';
-        }
-
-        // ── AI ideas ──────────────────────────────────────────────────
-        const FLOW_URL = 'https://bb06665214b0e7c9957df91fc7a08e.c0.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/5cdce877a561402c94b03243239610d8/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=TqtOAzyz7PUQIcLl3Ry6gqh9Z56B4ujkGIDnmr63P2E';
-
-        function renderIdeas(ideas, checkedStates = {}) {
-            const panel = document.getElementById('ai-ideas-panel');
-            const list = document.getElementById('ai-ideas-list');
-            list.innerHTML = '';
-            ideas.forEach((idea, index) => {
-                const trimmed = idea.trim();
-                if (!trimmed) return;
-                const wrapper = document.createElement('div');
-                wrapper.className = 'flex items-start space-x-2';
-
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.id = `idea-${index}`;
-                checkbox.className = 'mt-1 h-4 w-4 text-[#15397F] border-gray-300 rounded flex-shrink-0';
-                checkbox.checked = !!checkedStates[index];
-                checkbox.addEventListener('change', () => {
-                    const states = getSavedCheckedStates();
-                    states[index] = checkbox.checked;
-                    localStorage.setItem('ai-ideas-checked', JSON.stringify(states));
-                });
-
-                const label = document.createElement('label');
-                label.htmlFor = checkbox.id;
-                label.className = 'text-gray-700';
-                label.innerHTML = trimmed.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-
-                wrapper.appendChild(checkbox);
-                wrapper.appendChild(label);
-                list.appendChild(wrapper);
-            });
-            panel.classList.remove('hidden');
-        }
-
-        function getSavedCheckedStates() {
-            try { return JSON.parse(localStorage.getItem('ai-ideas-checked') || '{}'); }
-            catch { return {}; }
-        }
-
-        async function generateAIideas() {
-            const button = document.getElementById('generate-ideas-button');
-            const panel = document.getElementById('ai-ideas-panel');
-            const list = document.getElementById('ai-ideas-list');
-            const errorText = document.getElementById('ai-ideas-error');
-            const area_not_addressed = document.getElementById('question-1').value.trim();
-            const client_industry = document.getElementById('industry').value.trim();
-            const aoi_category = document.querySelector('input[name="aoi-category"]:checked')?.value || '';
-
-            button.disabled = true;
-            button.textContent = 'Generating...';
-            errorText.classList.add('hidden');
-            list.innerHTML = '<div class="text-gray-600">Generating ideas…</div>';
-            panel.classList.remove('hidden');
-
-            try {
-                const response = await fetch(FLOW_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ area_not_addressed, client_industry, aoi_category })
-                });
-
-                const data = await response.json();
-                if (!response.ok) throw new Error(data.error || 'Request failed');
-
-                localStorage.setItem('ai-ideas', JSON.stringify(data.ideas));
-                localStorage.removeItem('ai-ideas-checked');
-                renderIdeas(data.ideas);
-            } catch (error) {
-                errorText.textContent = error.message;
-                errorText.classList.remove('hidden');
-                list.innerHTML = '';
-            } finally {
-                button.disabled = false;
-                button.textContent = 'Generate some ideas';
-            }
-        }
-
-        // ── Init ──────────────────────────────────────────────────────
-        document.addEventListener('DOMContentLoaded', restoreFromStorage);
-    </script>
+    // ── Init ──────────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', restoreFromStorage);
+</script>
 </body>
 </html>
