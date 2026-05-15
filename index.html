@@ -228,112 +228,116 @@
                     </button>
                     <div class="accordion-content" id="content-1">
                         <div class="px-6 py-4 space-y-6 bg-gray-50">
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">1. Identify your target audience:</label>
-                                    <div class="field-wrap">
-                                        <textarea id="usp-1" rows="3" oninput="saveToStorage()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]"></textarea>
-                                        <button class="mic-btn" onclick="startVoice('usp-1',this)" title="Speak">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">2. List the benefits you offer:</label>
-                                    <div class="field-wrap">
-                                        <textarea id="usp-2" rows="3" oninput="saveToStorage()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]"></textarea>
-                                        <button class="mic-btn" onclick="startVoice('usp-2',this)" title="Speak">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">3. Define your brand promise:</label>
-                                    <div class="field-wrap">
-                                        <textarea id="usp-3" rows="3" oninput="saveToStorage()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]"></textarea>
-                                        <button class="mic-btn" onclick="startVoice('usp-3',this)" title="Speak">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bg-white p-4 rounded border border-gray-200">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Your USP Statement:</label>
-                                <div class="field-wrap">
-                                    <textarea id="usp-statement" rows="4" oninput="saveToStorage()" placeholder="Your USP will appear here..." class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]"></textarea>
-                                    <button class="mic-btn" onclick="startVoice('usp-statement',this)" title="Speak">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-                                    </button>
-                                </div>
-                                <button class="mt-3 px-4 py-2 bg-[#15397F] text-white rounded hover:bg-[#0f2f69] transition">Generate USP Statement</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- ── Tagline Section ─────────────────────────────────── -->
-                <div class="bg-white rounded-lg shadow">
-                    <button class="accordion-button w-full px-6 py-4 text-white font-semibold text-lg flex justify-between items-center rounded-t-lg" onclick="toggleAccordion(2)">
-                        <span>Tagline</span>
-                        <svg class="w-5 h-5" id="icon-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-                        </svg>
-                    </button>
-                    <div class="accordion-content" id="content-2">
-                        <div class="px-6 py-4 space-y-6 bg-gray-50">
-                            <div class="space-y-4">
+                            <!-- Target Audience -->
+                            <div class="space-y-5">
+                                <h3 class="font-semibold text-gray-900">Identify your target audience:</h3>
+
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">1. What's your core message?</label>
-                                    <div class="field-wrap">
-                                        <textarea id="tagline-1" rows="3" oninput="saveToStorage()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]"></textarea>
-                                        <button class="mic-btn" onclick="startVoice('tagline-1',this)" title="Speak">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-                                        </button>
+                                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Age Group</p>
+                                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-y-2 gap-x-4">
+                                        <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" name="usp-age" value="Under 20" onchange="saveCheckboxGroup('usp-age')" class="w-4 h-4">Under 20</label>
+                                        <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" name="usp-age" value="20–29" onchange="saveCheckboxGroup('usp-age')" class="w-4 h-4">20–29</label>
+                                        <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" name="usp-age" value="30–39" onchange="saveCheckboxGroup('usp-age')" class="w-4 h-4">30–39</label>
+                                        <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" name="usp-age" value="40–49" onchange="saveCheckboxGroup('usp-age')" class="w-4 h-4">40–49</label>
+                                        <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" name="usp-age" value="50–59" onchange="saveCheckboxGroup('usp-age')" class="w-4 h-4">50–59</label>
+                                        <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" name="usp-age" value="60–69" onchange="saveCheckboxGroup('usp-age')" class="w-4 h-4">60–69</label>
+                                        <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" name="usp-age" value="70+" onchange="saveCheckboxGroup('usp-age')" class="w-4 h-4">70+</label>
                                     </div>
                                 </div>
+
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">2. What emotion do you want to evoke?</label>
-                                    <div class="field-wrap">
-                                        <textarea id="tagline-2" rows="3" oninput="saveToStorage()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]"></textarea>
-                                        <button class="mic-btn" onclick="startVoice('tagline-2',this)" title="Speak">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-                                        </button>
+                                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Gender</p>
+                                    <div class="flex flex-wrap gap-6">
+                                        <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" name="usp-gender" value="Male" onchange="saveCheckboxGroup('usp-gender')" class="w-4 h-4">Male</label>
+                                        <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" name="usp-gender" value="Female" onchange="saveCheckboxGroup('usp-gender')" class="w-4 h-4">Female</label>
+                                        <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" name="usp-gender" value="Both" onchange="saveCheckboxGroup('usp-gender')" class="w-4 h-4">Both</label>
                                     </div>
                                 </div>
+
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">3. What makes you memorable?</label>
-                                    <div class="field-wrap">
-                                        <textarea id="tagline-3" rows="3" oninput="saveToStorage()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]"></textarea>
-                                        <button class="mic-btn" onclick="startVoice('tagline-3',this)" title="Speak">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-                                        </button>
+                                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Income Level</p>
+                                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-y-2 gap-x-4">
+                                        <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" name="usp-income" value="Under $50k" onchange="saveCheckboxGroup('usp-income')" class="w-4 h-4">Under $50k</label>
+                                        <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" name="usp-income" value="$50k–$99k" onchange="saveCheckboxGroup('usp-income')" class="w-4 h-4">$50k–$99k</label>
+                                        <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" name="usp-income" value="$100k–$149k" onchange="saveCheckboxGroup('usp-income')" class="w-4 h-4">$100k–$149k</label>
+                                        <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" name="usp-income" value="$150k–$199k" onchange="saveCheckboxGroup('usp-income')" class="w-4 h-4">$150k–$199k</label>
+                                        <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" name="usp-income" value="$200k+" onchange="saveCheckboxGroup('usp-income')" class="w-4 h-4">$200k+</label>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Employment Type</p>
+                                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-y-2 gap-x-4">
+                                        <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" name="usp-employment" value="Self-employed" onchange="saveCheckboxGroup('usp-employment')" class="w-4 h-4">Self-employed</label>
+                                        <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" name="usp-employment" value="Business Owner" onchange="saveCheckboxGroup('usp-employment')" class="w-4 h-4">Business Owner</label>
+                                        <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" name="usp-employment" value="Employee (full-time)" onchange="saveCheckboxGroup('usp-employment')" class="w-4 h-4">Employee (full-time)</label>
+                                        <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" name="usp-employment" value="Employee (part-time)" onchange="saveCheckboxGroup('usp-employment')" class="w-4 h-4">Employee (part-time)</label>
+                                        <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" name="usp-employment" value="Manager/Executive" onchange="saveCheckboxGroup('usp-employment')" class="w-4 h-4">Manager/Executive</label>
+                                        <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" name="usp-employment" value="Retired" onchange="saveCheckboxGroup('usp-employment')" class="w-4 h-4">Retired</label>
+                                        <label class="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" name="usp-employment" value="Student/Apprentice" onchange="saveCheckboxGroup('usp-employment')" class="w-4 h-4">Student/Apprentice</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="bg-white p-4 rounded border border-gray-200">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Your Tagline Options:</label>
-                                <div class="space-y-2 mb-4">
-                                    <div class="field-wrap">
-                                        <input id="tagline-opt-1" type="text" oninput="saveToStorage()" placeholder="Option 1" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]">
-                                        <button class="mic-btn" onclick="startVoice('tagline-opt-1',this)" title="Speak">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-                                        </button>
-                                    </div>
-                                    <div class="field-wrap">
-                                        <input id="tagline-opt-2" type="text" oninput="saveToStorage()" placeholder="Option 2" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]">
-                                        <button class="mic-btn" onclick="startVoice('tagline-opt-2',this)" title="Speak">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-                                        </button>
-                                    </div>
-                                    <div class="field-wrap">
-                                        <input id="tagline-opt-3" type="text" oninput="saveToStorage()" placeholder="Option 3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]">
-                                        <button class="mic-btn" onclick="startVoice('tagline-opt-3',this)" title="Speak">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-                                        </button>
-                                    </div>
+
+                            <!-- Generate Button -->
+                            <button id="generate-usp-btn" onclick="generateUSP()"
+                                class="w-full py-3 bg-[#15397F] text-white font-semibold rounded-md hover:bg-[#0f2f69] transition text-base">
+                                Generate USP &amp; Tagline
+                            </button>
+
+                            <!-- Progress -->
+                            <div id="usp-progress" class="hidden flex items-center gap-3 py-2">
+                                <div class="step-icon running" id="usp-progress-icon">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="animation:rotate 1s linear infinite;transform-origin:center"><path stroke-linecap="round" d="M12 2a10 10 0 0 1 0 20"/></svg>
                                 </div>
-                                <button class="px-4 py-2 bg-[#15397F] text-white rounded hover:bg-[#0f2f69] transition">Generate Tagline Options</button>
+                                <p class="text-sm font-medium text-gray-800" id="usp-progress-text">Generating your USP &amp; Tagline...</p>
+                                <p id="usp-progress-error" class="text-sm text-red-600 hidden mt-1"></p>
                             </div>
+
+                            <!-- Ranked Benefits -->
+                            <div id="usp-benefits-section" class="hidden">
+                                <h3 class="font-semibold text-gray-900 mb-1">Your Key Benefits</h3>
+                                <p class="text-sm text-gray-500 mb-3">Ranked high to low based on what your target audience values most.</p>
+                                <ol id="usp-benefits-list" class="space-y-1 list-decimal list-inside text-sm text-gray-700"></ol>
+                            </div>
+
+                            <!-- Brand Promise -->
+                            <div id="usp-brand-promise-section" class="hidden">
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Your Brand Promise</label>
+                                <p class="text-sm text-gray-500 mb-2">Edit if needed before selecting a USP option below.</p>
+                                <textarea id="usp-brand-promise" rows="2" oninput="saveToStorage()"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F] text-sm"></textarea>
+                            </div>
+
+                            <!-- USP Options -->
+                            <div id="usp-options-section" class="hidden space-y-3">
+                                <h3 class="font-semibold text-gray-900">Your USP Options</h3>
+                                <p class="text-sm text-gray-500">Edit if needed, then select the one that best fits.</p>
+                                <div id="usp-options-list" class="space-y-3"></div>
+                            </div>
+
+                            <!-- Tagline Options -->
+                            <div id="tagline-options-section" class="hidden space-y-3">
+                                <h3 class="font-semibold text-gray-900">Your Tagline Options</h3>
+                                <p class="text-sm text-gray-500">7 words or fewer. Edit if needed, then select your favourite.</p>
+                                <div id="tagline-options-list" class="space-y-3"></div>
+                            </div>
+
+                            <!-- Selected USP -->
+                            <div id="usp-final-section" class="hidden">
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Your USP Statement</label>
+                                <textarea id="usp-statement" rows="3" oninput="saveToStorage(); syncUSP();"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]"></textarea>
+                            </div>
+
+                            <!-- Selected Tagline -->
+                            <div id="tagline-final-section" class="hidden">
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Your Tagline</label>
+                                <textarea id="usp-tagline" rows="2" oninput="saveToStorage(); syncTagline();"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#15397F]"></textarea>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -351,11 +355,11 @@
                         </div>
                         <div class="border-t pt-4">
                             <h3 class="font-semibold text-gray-700 text-sm">Unique Selling Proposition</h3>
-                            <p class="text-gray-600 text-sm mt-1">(Not yet generated)</p>
+                            <p id="usp-summary-text" class="text-gray-600 text-sm mt-1">(Not yet generated)</p>
                         </div>
                         <div class="border-t pt-4">
                             <h3 class="font-semibold text-gray-700 text-sm">Tagline</h3>
-                            <p class="text-gray-600 text-sm mt-1">(Not yet generated)</p>
+                            <p id="tagline-summary-text" class="text-gray-600 text-sm mt-1">(Not yet generated)</p>
                         </div>
                         <div class="border-t pt-4 space-y-2">
                             <button id="share-btn" onclick="shareSession()" class="hidden w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition flex items-center justify-center gap-2">
@@ -379,9 +383,10 @@
     // ── localStorage ──────────────────────────────────────────────────────
     const TEXT_FIELDS = [
         'industry','question-1','question-2','question-3','aoi-description',
-        'usp-1','usp-2','usp-3','usp-statement',
-        'tagline-1','tagline-2','tagline-3','tagline-opt-1','tagline-opt-2','tagline-opt-3'
+        'usp-brand-promise','usp-statement','usp-tagline'
     ];
+
+    const CHECKBOX_GROUPS = ['usp-age','usp-gender','usp-income','usp-employment'];
 
     function saveToStorage() {
         TEXT_FIELDS.forEach(id => {
@@ -390,7 +395,25 @@
         });
         const radio = document.querySelector('input[name="aoi-category"]:checked');
         if (radio) localStorage.setItem('aoi-category', radio.value);
+        CHECKBOX_GROUPS.forEach(g => saveCheckboxGroup(g));
         updateClearButton();
+    }
+
+    function saveCheckboxGroup(groupName) {
+        const vals = [...document.querySelectorAll(`input[name="${groupName}"]:checked`)].map(el => el.value);
+        localStorage.setItem(groupName, JSON.stringify(vals));
+    }
+
+    function restoreCheckboxGroups() {
+        CHECKBOX_GROUPS.forEach(groupName => {
+            try {
+                const vals = JSON.parse(localStorage.getItem(groupName) || '[]');
+                vals.forEach(val => {
+                    const el = document.querySelector(`input[name="${groupName}"][value="${val}"]`);
+                    if (el) el.checked = true;
+                });
+            } catch {}
+        });
     }
 
     function restoreFromStorage() {
@@ -405,6 +428,7 @@
             if (r) r.checked = true;
         }
         syncAOI();
+        restoreCheckboxGroups();
 
         const aoi = localStorage.getItem('aoi-description');
         if (aoi) {
@@ -418,6 +442,22 @@
                 document.getElementById('review-section').classList.remove('hidden');
                 showAOIOptions(opts);
             }
+        } catch {}
+
+        // Restore USP/Tagline results
+        const uspStmt = localStorage.getItem('usp-statement');
+        if (uspStmt) {
+            document.getElementById('usp-final-section').classList.remove('hidden');
+            document.getElementById('usp-summary-text').textContent = uspStmt;
+        }
+        const tagline = localStorage.getItem('usp-tagline');
+        if (tagline) {
+            document.getElementById('tagline-final-section').classList.remove('hidden');
+            document.getElementById('tagline-summary-text').textContent = tagline;
+        }
+        try {
+            const uspData = JSON.parse(localStorage.getItem('usp-results'));
+            if (uspData) showUSPResults(uspData);
         } catch {}
 
         updateClearButton();
@@ -577,12 +617,22 @@
         TEXT_FIELDS.forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
         document.querySelectorAll('input[name="aoi-category"]').forEach(r => r.checked = false);
 
-        ['review-section','aoi-options-section','aoi-final-section','progress-panel'].forEach(id =>
-            document.getElementById(id).classList.add('hidden')
+        [...CHECKBOX_GROUPS, 'usp-results'].forEach(k => localStorage.removeItem(k));
+        CHECKBOX_GROUPS.forEach(g => document.querySelectorAll(`input[name="${g}"]`).forEach(el => el.checked = false));
+
+        ['review-section','aoi-options-section','aoi-final-section','progress-panel',
+         'usp-benefits-section','usp-brand-promise-section','usp-options-section',
+         'tagline-options-section','usp-final-section','tagline-final-section','usp-progress'].forEach(id =>
+            document.getElementById(id)?.classList.add('hidden')
         );
 
         document.getElementById('aoi-options-list').innerHTML = '';
+        document.getElementById('usp-options-list').innerHTML = '';
+        document.getElementById('tagline-options-list').innerHTML = '';
+        document.getElementById('usp-benefits-list').innerHTML = '';
         document.getElementById('aoi-summary-text').textContent = '(Not yet generated)';
+        document.getElementById('usp-summary-text').textContent = '(Not yet generated)';
+        document.getElementById('tagline-summary-text').textContent = '(Not yet generated)';
         document.getElementById('swot-label').textContent = 'Choose file...';
         document.getElementById('mvv-label').textContent = 'Choose file...';
         document.getElementById('swot-file').value = '';
@@ -640,6 +690,138 @@
             // Remove hash from URL so refreshing doesn't re-import
             history.replaceState(null, '', window.location.pathname);
         } catch { /* invalid hash — ignore */ }
+    }
+
+    // ── Summary syncs ─────────────────────────────────────────────────────
+    function syncUSP() {
+        const val = document.getElementById('usp-statement').value.trim();
+        document.getElementById('usp-summary-text').textContent = val || '(Not yet generated)';
+    }
+    function syncTagline() {
+        const val = document.getElementById('usp-tagline').value.trim();
+        document.getElementById('tagline-summary-text').textContent = val || '(Not yet generated)';
+    }
+
+    // ── USP option/tagline cards ──────────────────────────────────────────
+    function makeOptionCards(options, listId, onSelect) {
+        const list = document.getElementById(listId);
+        list.innerHTML = '';
+        options.forEach((opt, i) => {
+            const trimmed = opt.trim();
+            if (!trimmed) return;
+
+            const label = document.createElement('p');
+            label.className = 'text-xs font-semibold text-[#15397F] uppercase tracking-wide';
+            label.textContent = `Option ${i + 1}`;
+
+            const ta = document.createElement('textarea');
+            ta.className = 'w-full text-sm text-gray-700 border border-gray-200 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#15397F]';
+            ta.value = trimmed;
+            ta.rows = listId === 'tagline-options-list' ? 2 : 4;
+
+            const btn = document.createElement('button');
+            btn.className = 'text-sm px-4 py-1.5 bg-[#15397F] text-white rounded hover:bg-[#0f2f69] transition';
+            btn.textContent = 'Use this';
+            btn.addEventListener('click', () => onSelect(ta.value.trim()));
+
+            const card = document.createElement('div');
+            card.className = 'bg-white border border-gray-200 rounded-lg p-4 space-y-3';
+            card.appendChild(label);
+            card.appendChild(ta);
+            card.appendChild(btn);
+            list.appendChild(card);
+        });
+    }
+
+    function showUSPResults(data) {
+        // Benefits
+        if (data.benefits?.length) {
+            const list = document.getElementById('usp-benefits-list');
+            list.innerHTML = '';
+            data.benefits.forEach(b => {
+                const li = document.createElement('li');
+                li.textContent = b.trim();
+                list.appendChild(li);
+            });
+            document.getElementById('usp-benefits-section').classList.remove('hidden');
+        }
+        // Brand Promise
+        if (data.brand_promise) {
+            document.getElementById('usp-brand-promise').value = data.brand_promise;
+            document.getElementById('usp-brand-promise-section').classList.remove('hidden');
+        }
+        // USP options
+        if (data.usp_options?.length) {
+            makeOptionCards(data.usp_options, 'usp-options-list', text => {
+                document.getElementById('usp-statement').value = text;
+                document.getElementById('usp-final-section').classList.remove('hidden');
+                syncUSP();
+                saveToStorage();
+            });
+            document.getElementById('usp-options-section').classList.remove('hidden');
+        }
+        // Tagline options
+        if (data.tagline_options?.length) {
+            makeOptionCards(data.tagline_options, 'tagline-options-list', text => {
+                document.getElementById('usp-tagline').value = text;
+                document.getElementById('tagline-final-section').classList.remove('hidden');
+                syncTagline();
+                saveToStorage();
+            });
+            document.getElementById('tagline-options-section').classList.remove('hidden');
+        }
+    }
+
+    // ── Generate USP & Tagline ────────────────────────────────────────────
+    async function generateUSP() {
+        const industry     = document.getElementById('industry').value.trim();
+        const aoi_category = document.querySelector('input[name="aoi-category"]:checked')?.value || '';
+        const aoi_description = document.getElementById('aoi-description').value.trim();
+        const q1 = document.getElementById('question-1').value.trim();
+        const q2 = document.getElementById('question-2').value.trim();
+        const q3 = document.getElementById('question-3').value.trim();
+
+        const ageParts        = [...document.querySelectorAll('input[name="usp-age"]:checked')].map(el => el.value);
+        const genderParts     = [...document.querySelectorAll('input[name="usp-gender"]:checked')].map(el => el.value);
+        const incomeParts     = [...document.querySelectorAll('input[name="usp-income"]:checked')].map(el => el.value);
+        const employmentParts = [...document.querySelectorAll('input[name="usp-employment"]:checked')].map(el => el.value);
+
+        const audienceLines = [];
+        if (ageParts.length)        audienceLines.push(`Age: ${ageParts.join(', ')}`);
+        if (genderParts.length)     audienceLines.push(`Gender: ${genderParts.join(', ')}`);
+        if (incomeParts.length)     audienceLines.push(`Income: ${incomeParts.join(', ')}`);
+        if (employmentParts.length) audienceLines.push(`Employment: ${employmentParts.join(', ')}`);
+        const target_audience = audienceLines.join('\n') || 'Not specified';
+
+        const btn = document.getElementById('generate-usp-btn');
+        const progress = document.getElementById('usp-progress');
+        const progressError = document.getElementById('usp-progress-error');
+
+        btn.disabled = true;
+        btn.textContent = 'Generating...';
+        progress.classList.remove('hidden');
+        progressError.classList.add('hidden');
+
+        try {
+            const data = await callFlow('generate_usp', {
+                industry, aoi_category, aoi_description, q1, q2, q3, target_audience
+            });
+            localStorage.setItem('usp-results', JSON.stringify(data));
+            showUSPResults(data);
+            saveToStorage();
+            document.getElementById('usp-progress-icon').className = 'step-icon done';
+            document.getElementById('usp-progress-icon').innerHTML = ICONS.done;
+            document.getElementById('usp-progress-text').textContent = 'Complete';
+        } catch (err) {
+            document.getElementById('usp-progress-icon').className = 'step-icon error';
+            document.getElementById('usp-progress-icon').innerHTML = ICONS.error;
+            document.getElementById('usp-progress-text').textContent = 'Generation failed';
+            progressError.textContent = err.message;
+            progressError.classList.remove('hidden');
+        }
+
+        btn.disabled = false;
+        btn.textContent = 'Generate USP & Tagline';
     }
 
     // ── Flow call helper ──────────────────────────────────────────────────
