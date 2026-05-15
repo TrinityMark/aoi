@@ -528,15 +528,25 @@
         options.forEach((opt, i) => {
             const trimmed = opt.trim();
             if (!trimmed) return;
+
+            const label = document.createElement('p');
+            label.className = 'text-xs font-semibold text-[#15397F] uppercase tracking-wide';
+            label.textContent = `Option ${i + 1}`;
+
+            const text = document.createElement('p');
+            text.className = 'text-sm text-gray-700 leading-relaxed';
+            text.textContent = trimmed;
+
+            const btn = document.createElement('button');
+            btn.className = 'text-sm px-4 py-1.5 bg-[#15397F] text-white rounded hover:bg-[#0f2f69] transition';
+            btn.textContent = 'Use this AOI';
+            btn.addEventListener('click', () => useAOI(trimmed));
+
             const card = document.createElement('div');
             card.className = 'bg-white border border-gray-200 rounded-lg p-4 space-y-3';
-            card.innerHTML = `
-                <p class="text-xs font-semibold text-[#15397F] uppercase tracking-wide">Option ${i + 1}</p>
-                <p class="text-sm text-gray-700 leading-relaxed">${trimmed}</p>
-                <button onclick="useAOI(${JSON.stringify(trimmed)})"
-                    class="text-sm px-4 py-1.5 bg-[#15397F] text-white rounded hover:bg-[#0f2f69] transition">
-                    Use this AOI
-                </button>`;
+            card.appendChild(label);
+            card.appendChild(text);
+            card.appendChild(btn);
             list.appendChild(card);
         });
         section.classList.remove('hidden');
